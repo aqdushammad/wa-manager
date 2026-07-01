@@ -1,30 +1,273 @@
-/* WA Manager Frontend Widget */
-.wam-wrap { position:fixed; bottom:20px; right:20px; z-index:99999; display:flex; flex-direction:column; align-items:flex-end; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
-.wam-popup { width:320px; background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,.18); margin-bottom:6px; display:none; }
-.wam-popup.open { display:block; animation:wamIn .22s ease; }
-@keyframes wamIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-.wam-header { background:#1a7c3e; padding:15px 18px; display:flex; align-items:center; gap:12px; position:relative; }
-.wam-header-icon { width:38px; height:38px; background:rgba(255,255,255,.18); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.wam-header-text h3 { color:#fff; font-size:15px; font-weight:700; margin:0 0 2px; line-height:1.2; }
-.wam-header-text p { color:rgba(255,255,255,.85); font-size:12px; margin:0; }
-.wam-close { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; color:rgba(255,255,255,.85); font-size:22px; cursor:pointer; padding:0; line-height:1; }
-.wam-body { padding:18px; background:#f7f7f7; }
-.wam-agent-card { display:flex; align-items:center; gap:12px; background:#fff; border-radius:12px; padding:14px; box-shadow:0 1px 4px rgba(0,0,0,.08); }
-.wam-agent-avatar { width:50px; height:50px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(37,211,102,.3); }
-.wam-agent-info h4 { font-size:14px; font-weight:700; color:#111; margin:0 0 5px; }
-.wam-online-badge { display:inline-flex; align-items:center; gap:4px; background:#eafaf1; border-radius:20px; padding:2px 8px; margin-left:5px; vertical-align:middle; font-size:11px; color:#1a7c3e; font-weight:600; }
-.wam-dot { width:7px; height:7px; background:#25D366; border-radius:50%; display:inline-block; }
-.wam-agent-info p { font-size:12px; color:#666; margin:0; line-height:1.5; }
-.wam-sep { height:1px; background:#e8e8e8; margin:14px 0; }
-.wam-start-btn { display:flex; align-items:center; justify-content:center; gap:10px; background:#25D366; color:#fff; border:none; border-radius:50px; padding:13px 20px; width:100%; font-size:14px; font-weight:700; cursor:pointer; text-decoration:none; box-sizing:border-box; transition:background .2s; }
-.wam-start-btn:hover { background:#1ebe5d; color:#fff; text-decoration:none; }
-.wam-tail { width:18px; height:10px; margin-right:22px; display:none; }
-.wam-tail::before { content:''; display:block; width:0; height:0; border-left:9px solid transparent; border-right:9px solid transparent; border-top:10px solid #f7f7f7; }
-.wam-float-btn { width:60px; height:60px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 16px rgba(37,211,102,.5); border:none; position:relative; transition:transform .15s; }
-.wam-float-btn:hover { transform:scale(1.07); }
-.wam-badge { position:absolute; top:-2px; right:-2px; background:#e74c3c; color:#fff; font-size:11px; font-weight:700; width:19px; height:19px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid #fff; }
+/* WA Manager Frontend Widget — v1.1.0 */
 
-@media (max-width:400px) {
-  .wam-popup { width:calc(100vw - 24px); }
-  .wam-wrap { right:12px; bottom:12px; }
+/* ── CSS Variables (overridden inline per-account) ──────────────────────── */
+.wam-wrap {
+    --wam-btn:    #25D366;
+    --wam-header: #1a7c3e;
+    --wam-avatar: #25D366;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Position: left */
+.wam-pos-left {
+    right: auto;
+    left: 20px;
+    align-items: flex-start;
+}
+.wam-pos-left .wam-tail {
+    margin-right: 0;
+    margin-left: 22px;
+}
+
+/* ── Popup ───────────────────────────────────────────────────────────────── */
+.wam-popup {
+    width: 320px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,.18);
+    margin-bottom: 6px;
+    display: none;
+}
+.wam-popup.open {
+    display: block;
+    animation: wamIn .22s ease;
+}
+@keyframes wamIn {
+    from { opacity:0; transform:translateY(12px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.wam-header {
+    background: var(--wam-header);
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+.wam-header-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(255,255,255,.18);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.wam-header-text h3 {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 2px;
+    line-height: 1.2;
+}
+.wam-header-text p {
+    color: rgba(255,255,255,.85);
+    font-size: 12px;
+    margin: 0;
+}
+.wam-close {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.85);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color .15s;
+}
+.wam-close:hover { color: #fff; }
+
+/* ── Body ────────────────────────────────────────────────────────────────── */
+.wam-body {
+    padding: 18px;
+    background: #f7f7f7;
+}
+
+/* ── Agent card (now an <a> link) ────────────────────────────────────────── */
+.wam-agent-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    position: relative;
+    border: 2px solid transparent;
+}
+.wam-agent-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,.13);
+    background: #f0fdf4;
+    border-color: var(--wam-btn);
+    text-decoration: none;
+    color: inherit;
+}
+.wam-agent-card:hover .wam-agent-arrow {
+    color: var(--wam-btn);
+    transform: translateX(3px);
+}
+.wam-agent-arrow {
+    margin-left: auto;
+    color: #ccc;
+    flex-shrink: 0;
+    transition: color .18s, transform .18s;
+}
+.wam-agent-avatar {
+    width: 50px;
+    height: 50px;
+    background: var(--wam-avatar);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(37,211,102,.3);
+}
+.wam-agent-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 5px;
+}
+.wam-online-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #eafaf1;
+    border-radius: 20px;
+    padding: 2px 8px;
+    margin-left: 5px;
+    vertical-align: middle;
+    font-size: 11px;
+    color: #1a7c3e;
+    font-weight: 600;
+}
+.wam-dot {
+    width: 7px;
+    height: 7px;
+    background: #25D366;
+    border-radius: 50%;
+    display: inline-block;
+    animation: wamPulse 2s infinite;
+}
+@keyframes wamPulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: .4; }
+}
+.wam-agent-info p {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ── Separator + CTA button ─────────────────────────────────────────────── */
+.wam-sep {
+    height: 1px;
+    background: #e8e8e8;
+    margin: 14px 0;
+}
+.wam-start-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--wam-btn);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 13px 20px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: filter .2s, transform .15s;
+}
+.wam-start-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ── Tail ────────────────────────────────────────────────────────────────── */
+.wam-tail {
+    width: 18px;
+    height: 10px;
+    margin-right: 22px;
+    display: none;
+}
+.wam-tail::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 10px solid #f7f7f7;
+}
+
+/* ── Float button ────────────────────────────────────────────────────────── */
+.wam-float-btn {
+    width: 60px;
+    height: 60px;
+    background: var(--wam-btn);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(37,211,102,.5);
+    border: none;
+    position: relative;
+    transition: transform .15s, filter .2s;
+}
+.wam-float-btn:hover {
+    transform: scale(1.1);
+    filter: brightness(1.08);
+}
+.wam-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: #e74c3c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 400px) {
+    .wam-popup { width: calc(100vw - 24px); }
+    .wam-wrap  { right: 12px; bottom: 12px; }
+    .wam-pos-left { left: 12px; right: auto; }
 }

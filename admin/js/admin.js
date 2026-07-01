@@ -1,18 +1,17 @@
 jQuery(function($){
+
+    /* ── Page selector ─────────────────────────────────────────────────────── */
     var selectedIds = [];
 
-    // Pre-populate from hidden input
     var existing = $('#wamPageIds').val();
     if (existing) {
         selectedIds = existing.split(',').filter(Boolean);
     }
 
-    // Toggle global checkbox
     $('#wamIsGlobal').on('change', function(){
         $('#wamPageField').toggle(!this.checked);
     }).trigger('change');
 
-    // Page search
     var searchTimer;
     $('#wamPageSearch').on('input', function(){
         clearTimeout(searchTimer);
@@ -64,4 +63,55 @@ jQuery(function($){
     function updateHidden() {
         $('#wamPageIds').val(selectedIds.join(','));
     }
+
+    /* ── Color pickers — sync text ↔ native picker ─────────────────────────── */
+    var colorPairs = [
+        { picker: '#wamBtnColor', text: '#wamBtnColorText' },
+        { picker: '#wamHdrColor', text: '#wamHdrColorText' },
+        { picker: '#wamAgtColor', text: '#wamAgtColorText' },
+    ];
+
+    colorPairs.forEach(function(pair){
+        // Picker → text box
+        $(pair.picker).on('input change', function(){
+            $(pair.text).val(this.value);
+            updatePreview();
+        });
+        // Text box → picker (only on valid 7-char hex)
+        $(pair.text).on('input', function(){
+            var v = this.value.trim();
+            if (/^#[0-9a-fA-F]{6}$/.test(v)) {
+                $(pair.picker).val(v);
+                updatePreview();
+            }
+        });
+    });
+
+    /* ── Position toggle active class ──────────────────────────────────────── */
+    $('input[name="widget_position"]').on('change', function(){
+        $('.wam-pos-opt').removeClass('active');
+        $(this).closest('.wam-pos-opt').addClass('active');
+        updatePreview();
+    });
+
+    /* ── Icon picker active class ───────────────────────────────────────────── */
+    $('input[name="icon_style"]').on('change', function(){
+        $('.wam-icon-opt').removeClass('active');
+        $(this).closest('.wam-icon-opt').addClass('active');
+    });
+
+    /* ── Live preview updater ───────────────────────────────────────────────── */
+    function updatePreview() {
+        var btn    = $('#wamBtnColor').val()  || '#25D366';
+        var header = $('#wamHdrColor').val()  || '#1a7c3e';
+        var avatar = $('#wamAgtColor').val()  || '#25D366';
+
+        $('#pvHeader').css('background', header);
+        $('#pvFloat').css('background', btn);
+        $('#pvBtn').css('background', btn);
+        $('#pvAvatar').css('background', avatar);
+    }
+
+    // Initial preview render
+    updatePreview();
 });
