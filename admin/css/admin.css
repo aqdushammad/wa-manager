@@ -1,0 +1,81 @@
+/* WA Manager Admin Styles */
+body.toplevel_page_wa-manager,
+body.wa-manager_page_wa-manager-add { background: #f0f2f5; }
+
+.wam-admin { max-width: 1100px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+/* Top bar */
+.wam-top-bar { display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:12px; padding:14px 22px; margin:20px 0 22px; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+.wam-top-bar-left { display:flex; align-items:center; gap:12px; }
+.wam-logo { display:flex; align-items:center; gap:10px; }
+.wam-logo-icon { background:#25D366; border-radius:10px; width:38px; height:38px; display:flex; align-items:center; justify-content:center; }
+.wam-logo-text { font-size:18px; font-weight:700; color:#1a1a1a; }
+
+/* Buttons */
+.wam-btn-primary { background:#25D366; color:#fff; border:none; border-radius:8px; padding:9px 18px; font-size:14px; font-weight:600; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:background .2s; }
+.wam-btn-primary:hover { background:#1ebe5d; color:#fff; }
+.wam-btn-sm { background:#fff; color:#333; border:1px solid #ddd; border-radius:8px; padding:7px 14px; font-size:13px; font-weight:500; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:5px; transition:all .2s; }
+.wam-btn-sm:hover { background:#f5f5f5; color:#111; }
+.wam-btn-sm.danger { color:#c0392b; border-color:#f0a8a3; }
+.wam-btn-sm.danger:hover { background:#fff5f5; }
+
+/* Notice */
+.wam-notice { padding:12px 18px; border-radius:8px; margin-bottom:16px; font-size:14px; font-weight:500; }
+.wam-notice.success { background:#eafaf1; color:#1a7c3e; border:1px solid #b2dfcc; }
+
+/* Empty state */
+.wam-empty { text-align:center; padding:60px 20px; background:#fff; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+.wam-empty-icon { margin-bottom:16px; }
+.wam-empty h2 { font-size:20px; color:#333; margin:0 0 8px; }
+.wam-empty p { color:#666; margin:0 0 20px; }
+
+/* Cards grid */
+.wam-cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(310px,1fr)); gap:18px; }
+.wam-card { background:#fff; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,.08); overflow:hidden; border:1px solid #eee; transition:box-shadow .2s; }
+.wam-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.12); }
+.wam-card-header { display:flex; align-items:center; gap:12px; padding:16px 18px 12px; border-bottom:1px solid #f0f0f0; }
+.wam-card-icon { background:#25D366; border-radius:8px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.wam-card-title h3 { margin:0; font-size:15px; font-weight:700; color:#1a1a1a; }
+.wam-phone { font-size:12px; color:#25D366; font-weight:600; }
+.wam-card-body { padding:12px 18px; min-height:56px; }
+.wam-meta { font-size:13px; color:#555; margin-bottom:6px; display:flex; align-items:flex-start; gap:6px; flex-wrap:wrap; }
+.wam-label { font-weight:600; color:#333; white-space:nowrap; }
+.wam-pill { background:#eafaf1; color:#1a7c3e; border-radius:20px; padding:2px 10px; font-size:12px; font-weight:500; }
+.wam-card-footer { display:flex; gap:8px; padding:12px 18px; background:#fafafa; border-top:1px solid #f0f0f0; }
+.wam-tag { margin-left:auto; border-radius:20px; padding:3px 10px; font-size:11px; font-weight:700; }
+.wam-tag.global { background:#fff3cd; color:#856404; }
+.wam-tag.page { background:#e7f3ff; color:#0d5fa3; }
+
+/* Form */
+.wam-form-wrap { background:#fff; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,.08); padding:28px 32px; max-width:820px; }
+.wam-form-title { font-size:20px; margin:0 0 24px; color:#1a1a1a; }
+.wam-section { margin-bottom:28px; border:1px solid #eee; border-radius:10px; padding:20px 22px; }
+.wam-section-title { font-size:14px; font-weight:700; color:#555; text-transform:uppercase; letter-spacing:.05em; margin:0 0 16px; }
+.wam-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.wam-field { margin-bottom:14px; }
+.wam-field label { display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:5px; }
+.wam-field input[type=text], .wam-field textarea { width:100%; border:1px solid #ddd; border-radius:8px; padding:9px 12px; font-size:14px; box-sizing:border-box; transition:border .2s; font-family:inherit; }
+.wam-field input[type=text]:focus, .wam-field textarea:focus { border-color:#25D366; outline:none; box-shadow:0 0 0 3px rgba(37,211,102,.12); }
+.wam-help { font-size:12px; color:#888; margin:4px 0 0; }
+.req { color:#e74c3c; }
+.wam-form-actions { display:flex; align-items:center; gap:12px; margin-top:8px; }
+
+/* Toggle switch */
+.wam-check-row { margin-bottom:10px; }
+.wam-toggle { display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13px; color:#444; user-select:none; }
+.wam-toggle input[type=checkbox] { display:none; }
+.wam-toggle-slider { width:40px; height:22px; background:#ccc; border-radius:11px; position:relative; flex-shrink:0; transition:background .2s; }
+.wam-toggle-slider::after { content:''; position:absolute; left:3px; top:3px; width:16px; height:16px; background:#fff; border-radius:50%; transition:left .2s; box-shadow:0 1px 3px rgba(0,0,0,.2); }
+.wam-toggle input:checked + .wam-toggle-slider { background:#25D366; }
+.wam-toggle input:checked + .wam-toggle-slider::after { left:21px; }
+
+/* Page selector */
+.wam-page-search-wrap { position:relative; }
+.wam-page-search-wrap > input { width:100%; }
+.wam-page-suggestions { position:absolute; top:100%; left:0; right:0; background:#fff; border:1px solid #ddd; border-top:none; border-radius:0 0 8px 8px; max-height:200px; overflow-y:auto; z-index:999; display:none; }
+.wam-page-suggestions.open { display:block; }
+.wam-suggestion-item { padding:9px 13px; font-size:13px; cursor:pointer; }
+.wam-suggestion-item:hover { background:#eafaf1; color:#1a7c3e; }
+.wam-selected-pages { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.wam-page-tag { background:#eafaf1; color:#1a7c3e; border:1px solid #b2dfcc; border-radius:20px; padding:4px 10px 4px 12px; font-size:13px; font-weight:500; display:inline-flex; align-items:center; gap:6px; }
+.wam-page-tag button { background:none; border:none; color:#1a7c3e; cursor:pointer; font-size:15px; line-height:1; padding:0; margin:0; }
